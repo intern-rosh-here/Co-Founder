@@ -1,0 +1,144 @@
+version: '3.8'
+
+services:
+  # MongoDB Database
+  mongodb:
+    image: mongo:6.0
+    container_name: cofounder-matrimony-db
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password123
+      MONGO_INITDB_DATABASE: cofounder-matrimony
+    volumes:
+      - mongodb_data:/data/db
+      - ./database/seed-data.json:/docker-entrypoint-initdb.d/seed-data.json
+    networks:
+      - cofounder-network
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: cofounder-matrimony-cache
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - cofounder-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Backend API Server
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: cofounder-matrimony-backend
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      NODE_ENV: development
+      PORT: 5000
+      MONGODB_URI: mongodb://admin:password123@mongodb:27017/cofounder-matrimony?authSource=admin
+      REDIS_URL: redis://redis:6379
+      JWT_SECRET: your_super_secret_jwt_key_change_in_production
+      JWT_EXPIRE: 7d
+      FRONTEND_URL: http://localhost:3000
+      BACKEND_URL: http://localhost:5000
+      EMAIL_USER: your_email@gmail.com
+      EMAIL_PASS: your_email_password
+      STRIPE_SECRET_KEY: sk_test_your_key
+      STRIPE_PUBLIC_KEY: pk_test_your_key
+      AWS_ACCESS_KEY_ID: your_access_key
+      AWS_SECRET_ACCESS_KEY: your_secret_key
+      AWS_S3_BUCKET: your_bucket
+      AWS_REGION: us-east-1
+    depends_on:
+      mongodb:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    networks:
+      - cofounder-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Frontend React App
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: cofounder-matrimony-frontend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      REACT_APP_API_URL: http://localhost:5000/api
+      REACT_APP_SOCKET_URL: http://localhost:5000
+      REACT_APP_STRIPE_PUBLIC_KEY: pk_test_your_key
+      REACT_APP_FIREBASE_API_KEY: your_firebase_api_key
+      REACT_APP_FIREBASE_AUTH_DOMAIN: your_firebase_auth_domain
+      REACT_APP_FIREBASE_PROJECT_ID: your_firebase_project_id
+      REACT_APP_AGORA_APP_ID: your_agora_app_id
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    networks:
+      - cofounder-network
+
+  # Nginx Reverse Proxy (Optional)
+  nginx:
+    image: nginx:alpine
+    container_name: cofounder-matrimony-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./config/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./config/ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - frontend
+      - backend
+    networks:
+      - cofounder-network
+
+# Volumes for persistent data
+volumes:
+  mongodb_data:
+    driver: local
+  redis_data:
+    driver: local
+
+# Networks
+networks:
+  cofounder-network:
+    driver: bridge
+
+# Usage:
+# docker-compose up -d              # Start all services
+# docker-compose down              # Stop all services
+# docker-compose logs -f            # View logs
+# docker-compose ps                # View status
+# docker-compose exec backend sh   # Connect to backend shell
