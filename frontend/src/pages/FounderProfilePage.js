@@ -27,7 +27,7 @@ const FounderProfilePage = () => {
   const matchData = location.state?.matchData;
   const { user: currentUser } = useSelector((state) => state.auth);
   const [postCount, setPostCount] = useState(0);
-const [ideaCount, setIdeaCount] = useState(0);
+  const [ideaCount, setIdeaCount] = useState(0);
   const [founder, setFounder] = useState(null);
   const [connectionStatus, setConnectionStatus] = useState('no_connection');
   const [buttonStatus, setButtonStatus] = useState('no_connection');
@@ -40,11 +40,11 @@ const [ideaCount, setIdeaCount] = useState(0);
   useEffect(() => {
     const loadFounder = async () => {
 
-      
+
       try {
         const res = await axios.get(`${API_URL}/api/profiles/${userId}`);
         setFounder(res.data.user);
-        
+
         // Load connection status and likes
         checkConnectionStatus();
         checkIfLiked();
@@ -155,35 +155,35 @@ const [ideaCount, setIdeaCount] = useState(0);
   };
 
   const handleMessage = async () => {
-  try {
-    setLoadingAction(true);
-    
-    // Create conversation
-    const response = await fetch(`${API_URL}/api/messages/create`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-      body: JSON.stringify({ userId }),
-    });
+    try {
+      setLoadingAction(true);
 
-    const convData = await response.json();
+      // Create conversation
+      const response = await fetch(`${API_URL}/api/messages/create`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+        body: JSON.stringify({ userId }),
+      });
 
-    if (convData.success && convData.data?._id) {
-      // Navigate to messages with that conversation ID
-      navigate(`/messages/${convData.data._id}`);
-      toast.success('📨 Chat opened!');
-    } else {
+      const convData = await response.json();
+
+      if (convData.success && convData.data?._id) {
+        // Navigate to messages with that conversation ID
+        navigate(`/messages/${convData.data._id}`);
+        toast.success('📨 Chat opened!');
+      } else {
+        toast.error('Failed to open chat');
+      }
+    } catch (error) {
+      console.error('Error opening chat:', error);
       toast.error('Failed to open chat');
+    } finally {
+      setLoadingAction(false);
     }
-  } catch (error) {
-    console.error('Error opening chat:', error);
-    toast.error('Failed to open chat');
-  } finally {
-    setLoadingAction(false);
-  }
-};
+  };
 
   const renderConnectionButton = () => {
     const buttonConfig = {
@@ -279,7 +279,7 @@ const [ideaCount, setIdeaCount] = useState(0);
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 py-12 px-4">
       <div className="max-w-4xl mx-auto">
-        
+
         {/* Back Button */}
         <button
           onClick={() => navigate('/browse')}
@@ -301,7 +301,7 @@ const [ideaCount, setIdeaCount] = useState(0);
               alt={founder.firstName}
               className="w-32 h-32 rounded-full object-cover border-4 border-purple-600"
             />
-              
+
             <div className="flex-1">
               <h1 className="text-4xl font-bold text-white mb-2">
                 {founder.firstName} {founder.lastName}
@@ -319,31 +319,30 @@ const [ideaCount, setIdeaCount] = useState(0);
               <div className="mb-6">
                 <p className="text-gray-400 text-sm mb-2">❤️ Likes: <span className="text-white font-bold">{likeCount}</span></p>
               </div>
-              
+
               <div className="flex gap-3 flex-wrap">
-              
+
                 <div className="flex gap-3 flex-wrap">
 
-  {currentUser?._id !== founder?._id && (
-    <>
-      {renderConnectionButton()}
+                  {currentUser?._id !== founder?._id && (
+                    <>
+                      {renderConnectionButton()}
 
-      <button
-        onClick={handleLike}
-        disabled={loadingAction}
-        className={`${
-          isLiked
-            ? 'bg-red-600 hover:bg-red-700'
-            : 'bg-gray-700 hover:bg-gray-600'
-        } disabled:opacity-50 text-white font-bold py-2 px-4 rounded-lg transition flex items-center justify-center gap-2`}
-      >
-        {isLiked ? <FaHeart /> : <FaRegHeart />}
-        {isLiked ? 'Liked' : 'Like'}
-      </button>
-    </>
-  )}
+                      <button
+                        onClick={handleLike}
+                        disabled={loadingAction}
+                        className={`${isLiked
+                          ? 'bg-red-600 hover:bg-red-700'
+                          : 'bg-gray-700 hover:bg-gray-600'
+                          } disabled:opacity-50 text-white font-bold py-2 px-4 rounded-lg transition flex items-center justify-center gap-2`}
+                      >
+                        {isLiked ? <FaHeart /> : <FaRegHeart />}
+                        {isLiked ? 'Liked' : 'Like'}
+                      </button>
+                    </>
+                  )}
 
-</div>
+                </div>
               </div>
 
               {/* Message Button (only if connected) */}
@@ -358,23 +357,23 @@ const [ideaCount, setIdeaCount] = useState(0);
             </div>
 
             {/* View Posts Button */}
-<button
-  onClick={() => navigate(`/founder/${userId}/posts`)}
-  style={{
-    flex: 1,
-    minWidth: '150px',
-    padding: '12px 20px',
-    background: '#764ba2',
-    color: 'white',
-    border: 'none',
-    borderRadius: '8px',
-    cursor: 'pointer',
-    fontWeight: 600,
-    fontSize: '14px',
-  }}
->
-  📝 View Posts 
-</button>
+            <button
+              onClick={() => navigate(`/founder/${userId}/posts`)}
+              style={{
+                flex: 1,
+                minWidth: '150px',
+                padding: '12px 20px',
+                background: '#764ba2',
+                color: 'white',
+                border: 'none',
+                borderRadius: '8px',
+                cursor: 'pointer',
+                fontWeight: 600,
+                fontSize: '14px',
+              }}
+            >
+              📝 View Posts
+            </button>
 
           </div>
         </div>
@@ -384,7 +383,7 @@ const [ideaCount, setIdeaCount] = useState(0);
           <h2 className="text-white text-xl font-bold mb-4">
             Professional Information
           </h2>
-            
+
           <p className="text-gray-300 mb-2">
             <span className="text-gray-400 text-sm">Industry:</span> {founder.industry || 'Not specified'}
           </p>

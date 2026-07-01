@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate, } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
   FaCompass,
   FaHeart,
@@ -7,41 +7,47 @@ import {
   FaLightbulb,
   FaUsers,
   FaCog,
-  FaChevronLeft,
-  FaChevronRight,
-  FaUserFriends
+  FaUserFriends,
+  FaTachometerAlt,
 } from 'react-icons/fa';
-import { FaComments} from 'react-icons/fa';
 
 const Sidebar = ({ isOpen, setIsOpen }) => {
   const navigate = useNavigate();
 
   const menuItems = [
-  { icon: FaCompass, label: 'Browse', path: '/browse' },
-  { icon: FaHeart, label: 'Matches', path: '/matches' },
-
-  // NEW
-  { icon: FaUserFriends, label: 'Connections', path: '/connections' },
-
-  { icon: FaEnvelope, label: 'Messages', path: '/messages' },
-  { icon: FaLightbulb, label: 'Ideas', path: '/ideas' },
-  { icon: FaUsers, label: 'Community', path: '/community' },
-  { icon: FaCog, label: 'Settings', path: '/settings' },
-];
+    { icon: FaTachometerAlt, label: 'Dashboard', path: '/dashboard' },
+    { icon: FaCompass, label: 'Browse', path: '/browse' },
+    { icon: FaHeart, label: 'Matches', path: '/matches' },
+    { icon: FaUserFriends, label: 'Connections', path: '/connections' },
+    { icon: FaEnvelope, label: 'Messages', path: '/messages' },
+    { icon: FaLightbulb, label: 'Ideas', path: '/ideas' },
+    { icon: FaUsers, label: 'Community', path: '/community' },
+    { icon: FaCog, label: 'Settings', path: '/settings' },
+  ];
 
   return (
     <>
-      
       {/* Sidebar */}
       <aside
         className={`
-          fixed left-0 top-12 h-[calc(100vh-48px)]
-          bg-gradient-to-b from-slate-900 via-purple-900 to-slate-900
-          border-r border-white/20
-          transition-all duration-300
+          fixed
+          left-0
+          top-0
+          bottom-0
+          w-64
+          bg-gradient-to-b
+          from-slate-900
+          via-purple-900
+          to-slate-900
+          border-r
+          border-white/20
+          transform
+          transition-transform
+          duration-300
           z-30
-          ${isOpen ? 'w-64' : 'w-0'}
-          overflow-hidden
+          overflow-y-auto
+          overflow-x-hidden
+          ${isOpen ? 'translate-x-0' : '-translate-x-full'}
         `}
       >
         {/* Logo */}
@@ -69,24 +75,6 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
           })}
         </nav>
       </aside>
-
-      {/* Arrow Toggle Button */}
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className={`
-          fixed top-1/2 -translate-y-1/2
-          z-50
-          bg-purple-700 hover:bg-purple-600
-          text-white
-          p-3 rounded-r-lg
-          transition-all duration-300
-          ${isOpen ? 'left-64' : 'left-0'}
-        `}
-      >
-        {isOpen ? <FaChevronLeft /> : <FaChevronRight />}
-      </button>
-
-      
 
     </>
   );

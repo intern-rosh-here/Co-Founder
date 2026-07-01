@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 import { logout } from '../store/authSlice';
-import { FaBell, FaEnvelope, FaUser, FaSignOutAlt } from 'react-icons/fa';
+import { FaBell, FaEnvelope, FaUser, FaSignOutAlt, FaBars } from 'react-icons/fa';
 import notificationService from '../services/notificationService';
 import { toast } from 'react-toastify';
 
 const API_URL = 'http://localhost:5000';
 
-const Navbar = () => {
+const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
   
@@ -58,7 +58,16 @@ useEffect(() => {
         <div className="flex justify-between items-center h-12">
           
           {/* Logo */}
-          <div className="flex items-center">
+          <div className="flex items-center gap-2">
+            {isAuthenticated && (
+              <button
+                onClick={() => setSidebarOpen(!sidebarOpen)}
+                className="p-1 text-gray-700 hover:text-purple-600 focus:outline-none transition-colors duration-200"
+                aria-label="Toggle Sidebar"
+              >
+                <FaBars className="text-xl" />
+              </button>
+            )}
             <span className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
               Cofounder Matches
             </span>

@@ -68,22 +68,25 @@ function App() {
 
   return (
     <Router>
-      <div className="App min-h-screen bg-gray-50">
-        {/* Show Navigation Only When Authenticated */}
-        {isAuthenticated && <Navbar />}
+      <div className="App min-h-screen bg-gray-50 overflow-x-hidden relative">
+        {/* Sidebar - Only when authenticated */}
+        {isAuthenticated && (
+          <Sidebar isOpen={sidebarOpen} setIsOpen={setSidebarOpen} />
+        )}
 
-        <div className="flex relative">
-          {/* Sidebar - Only when authenticated */}
+        {/* Shifting container: wraps Navbar and Main content */}
+        <div
+          className={`transition-transform duration-300 ease-in-out min-h-screen flex flex-col relative ${
+            isAuthenticated && sidebarOpen ? 'translate-x-64' : 'translate-x-0'
+          }`}
+        >
+          {/* Show Navigation Only When Authenticated */}
           {isAuthenticated && (
-            <Sidebar isOpen={sidebarOpen} setIsOpen={setSidebarOpen} />
+            <Navbar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
           )}
 
-          {/* Main Content Area - Shifts when sidebar opens */}
-          <main
-            className={`flex-1 w-full transition-all duration-300 ease-in-out ${
-              isAuthenticated && sidebarOpen ? 'ml-64' : 'ml-0'
-            }`}
-          >
+          {/* Main Content Area */}
+          <main className="flex-1 w-full">
             <Routes>
               {/* ==================== PUBLIC ROUTES ==================== */}
               <Route path="/" element={<HomePage />} />
@@ -292,6 +295,14 @@ function App() {
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </main>
+
+          {/* Backdrop overlay for mobile when sidebar is open */}
+          {isAuthenticated && sidebarOpen && (
+            <div
+              className="absolute inset-0 z-50 bg-black/40 backdrop-blur-sm md:hidden cursor-pointer"
+              onClick={() => setSidebarOpen(false)}
+            />
+          )}
         </div>
 
         {/* Toast Notifications */}
