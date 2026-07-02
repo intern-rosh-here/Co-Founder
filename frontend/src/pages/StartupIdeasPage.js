@@ -18,14 +18,7 @@ import {
 import ideaService from '../services/ideaService';
 
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
-const getImageUrl = (imagePath) => {
-  if (!imagePath) return null;
-  return imagePath.replace(
-    'http://localhost:5000',
-    'https://cofounder-matrimony-backend.onrender.com'
-  );
-};
+const API_URL = 'http://localhost:5000';
 
 const StartupIdeasPage = () => {
   const navigate = useNavigate();

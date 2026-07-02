@@ -16,15 +16,8 @@ import {
   FaBell
 } from 'react-icons/fa';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+const API_URL = 'http://localhost:5000/api';
 
-const getImageUrl = (imagePath) => {
-  if (!imagePath) return null;
-  return imagePath.replace(
-    'http://localhost:5000',
-    'https://cofounder-matrimony-backend.onrender.com'
-  );
-};
 const DashboardPage = () => {
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
@@ -546,9 +539,7 @@ const DashboardPage = () => {
                       </div>
                       <div className="flex items-center justify-between mt-4 pt-3 border-t border-white/5 text-[10px] text-gray-500 font-medium">
                         <span>💡 Startup Idea</span>
-                        <span className="flex items-center gap-1 text-pink-400 font-bold bg-pink-500/10 px-2 py-0.5 rounded-full border border-pink-500/10">
-                          ❤️ {idea.likes?.length || 0} likes
-                        </span>
+                        
                       </div>
                     </div>
                   ))

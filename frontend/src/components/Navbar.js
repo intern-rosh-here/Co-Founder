@@ -6,7 +6,7 @@ import { FaBell, FaEnvelope, FaUser, FaSignOutAlt, FaBars } from 'react-icons/fa
 import notificationService from '../services/notificationService';
 import { toast } from 'react-toastify';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+const API_URL = 'http://localhost:5000';
 
 const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
   const [showDropdown, setShowDropdown] = useState(false);
