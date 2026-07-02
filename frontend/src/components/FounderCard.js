@@ -17,7 +17,7 @@ const FounderCard = ({ founder, onAddFavorite, isFavorite }) => {
       <div className="relative h-40 bg-gradient-to-r from-purple-600 to-blue-600 flex items-center justify-center">
         {founder.profileImage ? (
           <img
-            src={founder.profileImage}
+            src={getImageUrl(founder.profileImage)} alt="profile"
             alt={founder.firstName}
             className="w-full h-full object-cover"
           />

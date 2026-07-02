@@ -12,6 +12,14 @@ import {
 } from 'react-icons/fa';
 import * as browseService from '../services/browseService';
 
+const getImageUrl = (imagePath) => {
+  if (!imagePath) return null;
+  return imagePath.replace(
+    'http://localhost:5000',
+    'https://cofounder-matrimony-backend.onrender.com'
+  );
+};
+
 const BrowseFoundersPage = () => {
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
@@ -68,6 +76,7 @@ const BrowseFoundersPage = () => {
     setLoading(false);
   }
 };
+
 
   const handleViewProfile = (id) => {
   navigate(`/founder/${id}`);
