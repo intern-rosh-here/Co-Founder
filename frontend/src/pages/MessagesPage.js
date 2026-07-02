@@ -11,7 +11,7 @@ import {
 } from 'react-icons/fa';
 import messagesService from '../services/messageService';
 
-const API_URL = 'http://localhost:5000';
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
 const MessagesPage = () => {
   const navigate = useNavigate();

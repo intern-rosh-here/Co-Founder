@@ -15,7 +15,7 @@ import {
 } from 'react-icons/fa';
 import matchesService from '../services/matchesService';
 
-const API_URL = 'http://localhost:5000';
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
 const MatchesPage = () => {
   const navigate = useNavigate();
