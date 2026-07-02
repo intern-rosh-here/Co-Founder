@@ -14,23 +14,15 @@ const server = http.createServer(app);
 // CORS Configuration for Express
 // ============================================
 const corsOptions = {
-  origin: function (origin, callback) {
-    const allowedOrigins = [
-      'http://localhost:3000',
-      'http://127.0.0.1:3000',
-      'http://localhost:3001',
-    ];
-    
-    // Allow requests with no origin (curl, Postman, mobile apps)
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      console.warn(`CORS blocked origin: ${origin}`);
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+  origin: [
+    'http://localhost:3000',
+    'http://127.0.0.1:3000',
+    'http://localhost:3001',
+    'https://co-founder-nu.vercel.app',
+    'https://co-founder-git-main-co-founders1.vercel.app',
+  ],
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 };
 
@@ -42,7 +34,11 @@ app.use(cors(corsOptions));
 // ============================================
 const io = socketIO(server, {
   cors: {
-    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+    origin: [
+      'http://localhost:3000',
+      'https://co-founder-nu.vercel.app',
+      'https://co-founder-git-main-co-founders1.vercel.app',
+    ],
     credentials: true,
     methods: ['GET', 'POST'],
   },
