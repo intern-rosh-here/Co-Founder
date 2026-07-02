@@ -31,6 +31,7 @@ import EditProfilePage from './pages/EditProfilePage';
 import MatchesPage from './pages/MatchesPage';
 import MessagesPage from './pages/MessagesPage';
 import StartupIdeasPage from './pages/StartupIdeasPage';
+import PostIdeaPage from './pages/PostIdeaPage';
 import CommunityPage from './pages/CommunityPage';
 import VideoCallPage from './pages/VideoCallPage';
 import PaymentPage from './pages/PaymentPage';
@@ -227,7 +228,14 @@ function App() {
                 }
               />
               
-              
+              <Route
+                path="/post-idea"
+                element={
+                  <ProtectedRoute>
+                    <PostIdeaPage />
+                  </ProtectedRoute>
+                }
+              />
               
               <Route
                 path="/community"
