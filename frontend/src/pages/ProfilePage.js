@@ -615,14 +615,18 @@ const ProfilePage = () => {
                   >
                     <div className="flex items-center gap-4 flex-1">
                       {like.userId?.profileImage ? (
+                        console.log("Profile image:", myProfile.profileImage),
                        <img
   src={
     myProfile.profileImage
       ? myProfile.profileImage.startsWith("http")
         ? myProfile.profileImage
         : `${API_URL}${myProfile.profileImage}`
-      : "https://via.placeholder.com/200?text=No+Image"
+      : "https://via.placeholder.com/200"
   }
+  onError={(e) => {
+    console.log("Image failed:", e.target.src);
+  }}
   alt="Profile"
   className="w-32 h-32 rounded-full object-cover border-4 border-purple-500"
 />
