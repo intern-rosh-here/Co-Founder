@@ -12,7 +12,6 @@ import {
 import messagesService from '../services/messageService';
 import io from 'socket.io-client';
 
-
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 const socket = io(process.env.REACT_APP_SOCKET_URL || 'http://localhost:5000');
 
@@ -382,12 +381,12 @@ const handleMessage = (data) => {
                         {otherUser?.profileImage ? (
                           <img
                             src={
-    match.profileImage
-      ? match.profileImage.startsWith("http")
-        ? match.profileImage
-        : `${API_URL}${match.profileImage}`
-      : "https://via.placeholder.com/150"
-  }
+  otherUser.profileImage
+    ? otherUser.profileImage.startsWith("http")
+      ? otherUser.profileImage
+      : `${API_URL}${otherUser.profileImage}`
+    : "https://via.placeholder.com/150"
+}
                             alt={otherUser.firstName}
                             className="w-12 h-12 rounded-full object-cover flex-shrink-0 border border-purple-500"
                           />
@@ -448,12 +447,12 @@ const handleMessage = (data) => {
   {getOtherUser(selectedConversation)?.profileImage ? (
     <img
       src={
-    match.profileImage
-      ? match.profileImage.startsWith("http")
-        ? match.profileImage
-        : `${API_URL}${match.profileImage}`
-      : "https://via.placeholder.com/150"
-  }
+  getOtherUser(selectedConversation)?.profileImage
+    ? getOtherUser(selectedConversation).profileImage.startsWith("http")
+      ? getOtherUser(selectedConversation).profileImage
+      : `${API_URL}${getOtherUser(selectedConversation).profileImage}`
+    : "https://via.placeholder.com/150"
+}
       alt="User"
       className="w-10 h-10 rounded-full object-cover border border-purple-500"
     />
