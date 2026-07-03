@@ -482,13 +482,7 @@ const ProfilePage = () => {
                     <div className="flex items-center gap-4">
                       {conn.otherUser?.profileImage ? (
                         <img
-                          src={
-    match.profileImage
-      ? match.profileImage.startsWith("http")
-        ? match.profileImage
-        : `${API_URL}${match.profileImage}`
-      : "https://via.placeholder.com/150"
-  }
+                          src={`${API_URL}${conn.otherUser.profileImage}`}
                           alt={conn.otherUser.firstName}
                           className="w-16 h-16 rounded-full object-cover border-2 border-purple-600"
                         />
