@@ -161,13 +161,13 @@ const ProfilePage = () => {
             {/* Profile Picture */}
             <div className="relative">
               <img
-                src={
-  myProfile.profileImage
-    ? myProfile.profileImage.startsWith("http")
-      ? myProfile.profileImage
-      : `${API_URL}${myProfile.profileImage}`
-    : "https://via.placeholder.com/200?text=No+Image"
-}
+                 src={
+    myProfile.profileImage
+      ? myProfile.profileImage.startsWith("http")
+        ? myProfile.profileImage
+        : `${API_URL}${myProfile.profileImage}`
+      : "https://via.placeholder.com/200?text=No+Image"
+  }
                 alt="Profile"
                 className="w-32 h-32 rounded-full object-cover border-4 border-purple-500"
               />
