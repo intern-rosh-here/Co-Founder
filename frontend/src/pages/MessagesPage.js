@@ -10,6 +10,8 @@ import {
   FaSearch,
 } from 'react-icons/fa';
 import messagesService from '../services/messageService';
+import io from 'socket.io-client';
+
 
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 const socket = io(process.env.REACT_APP_SOCKET_URL || 'http://localhost:5000');
