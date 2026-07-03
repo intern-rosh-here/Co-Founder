@@ -72,7 +72,7 @@ exports.createPost = async (req, res) => {
 
 const media =
   req.files?.map((file) => ({
-    url: `/uploads/community/${file.filename}`,
+    url: file.path,
     fileName: file.originalname,
     type: file.mimetype.startsWith('image')
       ? 'image'

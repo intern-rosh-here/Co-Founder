@@ -381,7 +381,13 @@ const handleMessage = (data) => {
                         {/* Avatar */}
                         {otherUser?.profileImage ? (
                           <img
-                            src={`${API_URL}${otherUser.profileImage}`}
+                            src={
+    match.profileImage
+      ? match.profileImage.startsWith("http")
+        ? match.profileImage
+        : `${API_URL}${match.profileImage}`
+      : "https://via.placeholder.com/150"
+  }
                             alt={otherUser.firstName}
                             className="w-12 h-12 rounded-full object-cover flex-shrink-0 border border-purple-500"
                           />
@@ -441,7 +447,13 @@ const handleMessage = (data) => {
   {/* Avatar */}
   {getOtherUser(selectedConversation)?.profileImage ? (
     <img
-      src={`${API_URL}${getOtherUser(selectedConversation).profileImage}`}
+      src={
+    match.profileImage
+      ? match.profileImage.startsWith("http")
+        ? match.profileImage
+        : `${API_URL}${match.profileImage}`
+      : "https://via.placeholder.com/150"
+  }
       alt="User"
       className="w-10 h-10 rounded-full object-cover border border-purple-500"
     />

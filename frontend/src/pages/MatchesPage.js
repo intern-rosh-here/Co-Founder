@@ -202,7 +202,13 @@ const handleAccept = async (match) => {
 
           {match.profileImage ? (
             <img
-              src={`${API_URL}${match.profileImage}`}
+              src={
+    match.profileImage
+      ? match.profileImage.startsWith("http")
+        ? match.profileImage
+        : `${API_URL}${match.profileImage}`
+      : "https://via.placeholder.com/150"
+  }
               alt={match.firstName}
               className="w-24 h-24 rounded-full border-4 border-white object-cover"
             />
