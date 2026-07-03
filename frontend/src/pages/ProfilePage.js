@@ -480,15 +480,16 @@ const ProfilePage = () => {
                     className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-xl p-6 flex items-center justify-between"
                   >
                     <div className="flex items-center gap-4">
-                      {conn.otherUser?.profileImage ? (
+                      {conn.otherUser?.profileImage ? (  
                         <img
-                          src={
-  conn.otherUser?.profileImage
-    ? conn.otherUser.profileImage.startsWith("http")
-      ? conn.otherUser.profileImage
-      : `${API_URL}${conn.otherUser.profileImage}`
-    : "https://via.placeholder.com/150"
-}
+  src={
+    myProfile.profileImage
+      ? myProfile.profileImage.startsWith("http")
+        ? myProfile.profileImage
+        : `${API_URL}${myProfile.profileImage}`
+      : "https://via.placeholder.com/200?text=No+Image"
+  }
+
                           alt={conn.otherUser.firstName}
                           className="w-16 h-16 rounded-full object-cover border-2 border-purple-600"
                         />

@@ -51,7 +51,9 @@ const EditProfilePage = () => {
   const [profileImage,   setProfileImage]   = useState(null);   // File object
 const [previewImage, setPreviewImage] = useState(
   user?.profileImage
-    ? `${API_URL}${user.profileImage}`
+    ? user.profileImage.startsWith("http")
+      ? user.profileImage
+      : `${API_URL}${user.profileImage}`
     : null
 );
   const [loading,        setLoading]        = useState(false);
@@ -72,8 +74,12 @@ const [previewImage, setPreviewImage] = useState(
       setFormData(buildFormData(profile));
 
       if (profile.profileImage) {
-        setPreviewImage(profile.profileImage);
-      }
+  setPreviewImage(
+    profile.profileImage.startsWith("http")
+      ? profile.profileImage
+      : `${API_URL}${profile.profileImage}`
+  );
+}
 
       dispatch(setAuthUser(profile));
     } catch (err) {
@@ -91,10 +97,12 @@ const [previewImage, setPreviewImage] = useState(
     setFormData(buildFormData(user));
 
     setPreviewImage(
-      user.profileImage
-        ? `${API_URL}${user.profileImage}`
-        : null
-    );
+  user.profileImage
+    ? user.profileImage.startsWith("http")
+      ? user.profileImage
+      : `${API_URL}${user.profileImage}`
+    : null
+);
   }
 }, [user]);
 
@@ -145,8 +153,10 @@ const [previewImage, setPreviewImage] = useState(
       if (updatedProfile?.profileImage) {
         dispatch(setAuthUser(updatedProfile));
         setPreviewImage(
-          `${API_URL}${updatedProfile.profileImage}`
-        );
+  updatedProfile.profileImage.startsWith("http")
+    ? updatedProfile.profileImage
+    : `${API_URL}${updatedProfile.profileImage}`
+);
         setProfileImage(null);
         if (fileInputRef.current) fileInputRef.current.value = '';
       } else {
