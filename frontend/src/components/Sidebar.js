@@ -13,6 +13,7 @@ import {
 
 const Sidebar = ({ isOpen, setIsOpen }) => {
   const navigate = useNavigate();
+  const sidebarRef = useRef(null);
 
   const menuItems = [
     { icon: FaTachometerAlt, label: 'Dashboard', path: '/dashboard' },
@@ -25,14 +26,33 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
     { icon: FaCog, label: 'Settings', path: '/settings' },
   ];
 
+  useEffect(() => {
+  function handleClickOutside(event) {
+    if (
+      isOpen &&
+      sidebarRef.current &&
+      !sidebarRef.current.contains(event.target)
+    ) {
+      setIsOpen(false);
+    }
+  }
+
+  document.addEventListener('mousedown', handleClickOutside);
+
+  return () => {
+    document.removeEventListener('mousedown', handleClickOutside);
+  };
+}, [isOpen, setIsOpen]);
+
   return (
     <>
       {/* Sidebar */}
       <aside
+      ref={sidebarRef}
         className={`
           fixed
           left-0
-          top-14
+          top-0
           bottom-0
           w-64
           bg-gradient-to-b
