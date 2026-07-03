@@ -121,21 +121,27 @@ exports.uploadProfilePicture = async (req, res) => {
     }
 
     const user = await User.findById(userId);
-
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    // Save Cloudinary URL
-    user.profileImage = req.file.path;
+    // Delete old profile image if exists
+    if (user.profileImage) {
+      const oldPath = path.join(__dirname, '../', user.profileImage);
+      if (fs.existsSync(oldPath)) {
+        fs.unlinkSync(oldPath);
+      }
+    }
 
+    // Save new profile image path
+    const imageUrl = `/uploads/profiles/${req.file.filename}`;
+    user.profileImage = imageUrl;
     await user.save();
 
     res.json({
       message: 'Profile picture updated',
-      profileImage: user.profileImage,
+      profileImage: imageUrl,
     });
-
   } catch (error) {
     console.error('Upload error:', error);
     res.status(500).json({ message: 'Server error' });
