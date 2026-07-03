@@ -482,7 +482,13 @@ const ProfilePage = () => {
                     <div className="flex items-center gap-4">
                       {conn.otherUser?.profileImage ? (
                         <img
-                          src={`${API_URL}${conn.otherUser.profileImage}`}
+                          src={
+  conn.otherUser?.profileImage
+    ? conn.otherUser.profileImage.startsWith("http")
+      ? conn.otherUser.profileImage
+      : `${API_URL}${conn.otherUser.profileImage}`
+    : "https://via.placeholder.com/150"
+}
                           alt={conn.otherUser.firstName}
                           className="w-16 h-16 rounded-full object-cover border-2 border-purple-600"
                         />
@@ -543,7 +549,13 @@ const ProfilePage = () => {
                     <div className="flex items-center gap-4 flex-1">
                       {req.senderId?.profileImage ? (
                         <img
-                          src={`${API_URL}${req.senderId.profileImage}`}
+                          src={
+  req.senderId?.profileImage
+    ? req.senderId.profileImage.startsWith("http")
+      ? req.senderId.profileImage
+      : `${API_URL}${req.senderId.profileImage}`
+    : "https://via.placeholder.com/150"
+}
                           alt={req.senderId.firstName}
                           className="w-16 h-16 rounded-full object-cover border-2 border-yellow-600"
                         />
@@ -604,7 +616,13 @@ const ProfilePage = () => {
                     <div className="flex items-center gap-4 flex-1">
                       {like.userId?.profileImage ? (
                         <img
-                          src={`${API_URL}${like.userId.profileImage}`}
+                          src={
+  like.userId?.profileImage
+    ? like.userId.profileImage.startsWith("http")
+      ? like.userId.profileImage
+      : `${API_URL}${like.userId.profileImage}`
+    : "https://via.placeholder.com/150"
+}
                           alt={like.userId.firstName}
                           className="w-16 h-16 rounded-full object-cover border-2 border-red-600"
                         />
