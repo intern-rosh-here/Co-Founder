@@ -32,7 +32,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
         className={`
           fixed
           left-0
-          top-0
+          top-14
           bottom-0
           w-64
           bg-gradient-to-b
