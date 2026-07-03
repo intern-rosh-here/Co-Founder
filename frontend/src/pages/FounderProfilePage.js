@@ -42,7 +42,7 @@ const FounderProfilePage = () => {
 
 
       try {
-        const res = await axios.get(`${API_URL}/api/profiles/${userId}`);
+        const res = await axios.get(`${API_URL}/profiles/${userId}`);
         setFounder(res.data.user);
 
         // Load connection status and likes
