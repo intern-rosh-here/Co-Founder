@@ -12,6 +12,8 @@ import {
 } from 'react-icons/fa';
 import * as browseService from '../services/browseService';
 
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
+
 const BrowseFoundersPage = () => {
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
@@ -217,10 +219,14 @@ const BrowseFoundersPage = () => {
                         {founder.profileImage ? (
                           <img
   src={
-    founder.profileImage
-      ? `http://localhost:5000${founder.profileImage}`
-      : '/default-avatar.png'
-  }
+  founder.profileImage
+    ? founder.profileImage.startsWith("http")
+      ? founder.profileImage
+      : `${API_URL}${founder.profileImage}`
+    : "https://via.placeholder.com/150"
+}onError={(e) => {
+    console.log("Failed image:", e.target.src);
+  }}
   alt={founder.firstName}
   className="w-14 h-14 rounded-full object-cover border-2 border-purple-500"
 />
