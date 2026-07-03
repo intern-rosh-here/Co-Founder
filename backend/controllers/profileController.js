@@ -140,9 +140,9 @@ exports.uploadProfilePicture = async (req, res) => {
     await user.save();
 
     res.json({
-      message: 'Profile picture updated',
-      profileImage: imageUrl,
-    });
+  message: 'Profile picture updated',
+  profileImage: user.profileImage,
+});
   } catch (error) {
     console.error('Upload error:', error);
     res.status(500).json({ message: 'Server error' });

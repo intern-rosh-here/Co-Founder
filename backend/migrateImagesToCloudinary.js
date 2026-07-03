@@ -7,6 +7,11 @@ const fs = require('fs');
 
 const User = require('./models/User');
 
+console.log(process.env.CLOUDINARY_CLOUD_NAME);
+console.log(process.env.CLOUDINARY_API_KEY);
+console.log(process.env.CLOUDINARY_API_SECRET ? "SECRET FOUND" : "NO SECRET");
+
+
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
@@ -48,8 +53,9 @@ async function migrate() {
       migrated++;
 
       console.log(`✅ ${user.firstName} migrated`);
-    } catch (err) {
-      console.log(err.message);
+    }catch (err) {
+  console.error(err);
+
     }
   }
 
