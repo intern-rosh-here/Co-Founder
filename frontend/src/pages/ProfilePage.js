@@ -162,10 +162,12 @@ const ProfilePage = () => {
             <div className="relative">
               <img
                 src={
-                  myProfile.profileImage
-                    ? `${API_URL}${myProfile.profileImage}`
-                    : 'https://via.placeholder.com/200?text=No+Image'
-                }
+  myProfile.profileImage
+    ? myProfile.profileImage.startsWith("http")
+      ? myProfile.profileImage
+      : `${API_URL}${myProfile.profileImage}`
+    : "https://via.placeholder.com/200?text=No+Image"
+}
                 alt="Profile"
                 className="w-32 h-32 rounded-full object-cover border-4 border-purple-500"
               />
@@ -482,13 +484,13 @@ const ProfilePage = () => {
                     <div className="flex items-center gap-4">
                       {conn.otherUser?.profileImage ? (  
                         <img
-  src={
-    myProfile.profileImage
-      ? myProfile.profileImage.startsWith("http")
-        ? myProfile.profileImage
-        : `${API_URL}${myProfile.profileImage}`
-      : "https://via.placeholder.com/200?text=No+Image"
-  }
+src={
+  conn.otherUser?.profileImage
+    ? conn.otherUser.profileImage.startsWith("http")
+      ? conn.otherUser.profileImage
+      : `${API_URL}${conn.otherUser.profileImage}`
+    : "https://via.placeholder.com/200?text=No+Image"
+}
 
                           alt={conn.otherUser.firstName}
                           className="w-16 h-16 rounded-full object-cover border-2 border-purple-600"
@@ -618,13 +620,13 @@ const ProfilePage = () => {
                       {like.userId?.profileImage ? (
                         console.log("Profile image:", myProfile.profileImage),
                        <img
-  src={
-    myProfile.profileImage
-      ? myProfile.profileImage.startsWith("http")
-        ? myProfile.profileImage
-        : `${API_URL}${myProfile.profileImage}`
-      : "https://via.placeholder.com/200"
-  }
+src={
+  like.userId?.profileImage
+    ? like.userId.profileImage.startsWith("http")
+      ? like.userId.profileImage
+      : `${API_URL}${like.userId.profileImage}`
+    : "https://via.placeholder.com/200"
+}
   onError={(e) => {
     console.log("Image failed:", e.target.src);
   }}
