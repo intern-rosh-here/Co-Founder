@@ -60,19 +60,17 @@ const ConnectionsPage = () => {
 
               <div className="flex items-center gap-5">
 
-                <img
-                
+               <img
   src={
-    connection.otherUser?.profileImage
-      ? connection.otherUser.profileImage.startsWith("http")
-        ? connection.otherUser.profileImage
-        : `${API_URL}${connection.otherUser.profileImage}`
+    conn.otherUser?.profileImage
+      ? conn.otherUser.profileImage.startsWith("http")
+        ? conn.otherUser.profileImage
+        : `${API_URL}${conn.otherUser.profileImage}`
       : "https://via.placeholder.com/150"
   }
-  
-                  className="w-16 h-16 rounded-full object-cover"
-                  alt=""
-                />
+  className="w-16 h-16 rounded-full object-cover"
+  alt={`${conn.otherUser?.firstName || ""} ${conn.otherUser?.lastName || ""}`}
+/>
 
                 <h2 className="text-white text-xl font-semibold">
                   {conn.otherUser?.firstName} {conn.otherUser?.lastName}
