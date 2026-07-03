@@ -16,10 +16,10 @@ const server = http.createServer(app);
 const corsOptions = {
   origin: function (origin, callback) {
     const allowedOrigins = [
-      'http://localhost:3000',
-      'http://127.0.0.1:3000',
-      'http://localhost:3001',
-    ];
+  'http://localhost:3000',
+  'http://127.0.0.1:3000',
+  process.env.FRONTEND_URL,
+].filter(Boolean);
     
     // Allow requests with no origin (curl, Postman, mobile apps)
     if (!origin || allowedOrigins.includes(origin)) {

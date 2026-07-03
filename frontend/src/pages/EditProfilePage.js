@@ -11,7 +11,7 @@ import { setAuthUser } from '../store/authSlice';
 const skillsToString = (skills) =>
   Array.isArray(skills) ? skills.join(', ') : (skills || '');
 
-const API_URL = 'http://localhost:5000';
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
 const buildFormData = (user = {}) => ({
   firstName: user.firstName || '',

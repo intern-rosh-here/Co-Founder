@@ -134,13 +134,12 @@ exports.uploadProfilePicture = async (req, res) => {
     }
 
     // Save new profile image path
-    const imageUrl = `/uploads/profiles/${req.file.filename}`;
-    user.profileImage = imageUrl;
+    
     await user.save();
 
     res.json({
       message: 'Profile picture updated',
-      profileImage: imageUrl,
+      profileImage: req.file.path,
     });
   } catch (error) {
     console.error('Upload error:', error);

@@ -2,30 +2,12 @@ const express = require('express');
 const router = express.Router();
 const profileController = require('../controllers/profileController');
 const auth = require('../middleware/auth');
-const multer = require('multer');
+
 const path = require('path');
 
 // Multer configuration for file uploads
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, '../uploads/profiles'));
-  },
-  filename: (req, file, cb) => {
-    cb(null, `${req.userId}-${Date.now()}${path.extname(file.originalname)}`);
-  },
-});
 
-const upload = multer({
-  storage,
-  limits: { fileSize: 10 * 1024 * 1024 }, // 5MB
-  fileFilter: (req, file, cb) => {
-    if (file.mimetype.startsWith('image/')) {
-      return cb(null, true);
-    }
-
-    cb(new Error('Only image files are allowed'));
-  },
-});
+const { upload } = require('../config/cloudinary');
 
 // ============================================
 // BROWSE FOUNDERS (NEW)

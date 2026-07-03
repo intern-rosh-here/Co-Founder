@@ -14,7 +14,7 @@ import {
 } from 'react-icons/fa';
 import communityService from '../services/communityService';
 
-const API_URL = 'http://localhost:5000';
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
 const CommunityPostDetailPage = () => {
   const { postId } = useParams();
