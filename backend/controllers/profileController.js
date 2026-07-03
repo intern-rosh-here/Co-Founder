@@ -134,8 +134,9 @@ exports.uploadProfilePicture = async (req, res) => {
     }
 
     // Save new profile image path
-    const imageUrl = `/uploads/profiles/${req.file.filename}`;
-    user.profileImage = imageUrl;
+  
+    user.profileImage = req.file.path;
+    
     await user.save();
 
     res.json({
