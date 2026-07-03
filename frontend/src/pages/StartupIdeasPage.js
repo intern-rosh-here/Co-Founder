@@ -18,7 +18,8 @@ import {
 import ideaService from '../services/ideaService';
 
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+const API_URL =
+  process.env.REACT_APP_API_URL || "http://localhost:5000/api";
 
 const StartupIdeasPage = () => {
   const navigate = useNavigate();
@@ -30,7 +31,7 @@ const StartupIdeasPage = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [showFilters, setShowFilters] = useState(false);
-
+  
   const [filters, setFilters] = useState({
     industry: '',
     fundingStage: '',
@@ -324,10 +325,10 @@ const StartupIdeasPage = () => {
                       <div className="flex items-center gap-2 mb-2">
                         {idea.userId?.profileImage ? (
                           <img
-                            src={`${API_URL}${idea.userId.profileImage}`}
-                            alt={idea.userId?.firstName}
-                            className="w-8 h-8 rounded-full object-cover flex-shrink-0"
-                          />
+  src={`${BACKEND_URL}${idea.userId.profileImage}`}
+  alt={idea.userId?.firstName}
+  className="w-8 h-8 rounded-full object-cover"
+/>
                         ) : (
                           <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
                             {idea.userId?.firstName?.[0]}
