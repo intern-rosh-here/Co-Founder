@@ -102,10 +102,12 @@ useEffect(() => {
                 >
                   <img
                     src={
-                      user?.profileImage
-                        ? `${API_URL}${user.profileImage}`
-                        : 'https://via.placeholder.com/32'
-                    }
+  user.profileImage
+    ? user.profileImage.startsWith("http")
+      ? user.profileImage
+      : `${API_URL}${user.profileImage}`
+    : "https://via.placeholder.com/150"
+}
                     alt="User"
                     className="w-8 h-8 rounded-full object-cover"
                   />

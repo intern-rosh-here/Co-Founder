@@ -62,10 +62,12 @@ const ConnectionsPage = () => {
 
                 <img
                   src={
-                    conn.otherUser?.profileImage
-                      ? `${API_URL}${conn.otherUser.profileImage}`
-                      : "https://via.placeholder.com/70"
-                  }
+  user.profileImage
+    ? user.profileImage.startsWith("http")
+      ? user.profileImage
+      : `${API_URL}${user.profileImage}`
+    : "https://via.placeholder.com/150"
+}
                   className="w-16 h-16 rounded-full object-cover"
                   alt=""
                 />

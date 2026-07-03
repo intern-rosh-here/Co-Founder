@@ -258,7 +258,13 @@ const CommunityPostDetailPage = () => {
               <div className="flex gap-3">
                 {user?.profileImage ? (
                   <img
-                    src={`${API_URL}${user.profileImage}`}
+                    src={
+  user.profileImage
+    ? user.profileImage.startsWith("http")
+      ? user.profileImage
+      : `${API_URL}${user.profileImage}`
+    : "https://via.placeholder.com/150"
+}
                     alt={user?.firstName}
                     className="w-10 h-10 rounded-full object-cover flex-shrink-0"
                   />

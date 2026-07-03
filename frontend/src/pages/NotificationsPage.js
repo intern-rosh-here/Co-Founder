@@ -237,7 +237,13 @@ setNotifications(prev =>
                     {/* Avatar */}
                     {notification.fromUser?.profileImage ? (
                       <img
-  src={`http://localhost:5000${notification.fromUser.profileImage}`}
+  src={
+  user.profileImage
+    ? user.profileImage.startsWith("http")
+      ? user.profileImage
+      : `${API_URL}${user.profileImage}`
+    : "https://via.placeholder.com/150"
+}
   alt={notification.fromUser.firstName}
   className="w-12 h-12 rounded-full object-cover flex-shrink-0 border-2 border-purple-600"
   onError={(e) => {
