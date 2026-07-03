@@ -12,6 +12,9 @@ import {
 import notificationService from '../services/notificationService';
 import connectionService from '../services/connectionService';
 
+const API_URL =
+  process.env.REACT_APP_API_URL || "http://localhost:5000/api";
+
 const NotificationsPage = () => {
   const navigate = useNavigate();
   
@@ -238,16 +241,16 @@ setNotifications(prev =>
                     {notification.fromUser?.profileImage ? (
                       <img
   src={
-  user.profileImage
-    ? user.profileImage.startsWith("http")
-      ? user.profileImage
-      : `${API_URL}${user.profileImage}`
-    : "https://via.placeholder.com/150"
-}
-  alt={notification.fromUser.firstName}
+    notification.fromUser?.profileImage
+      ? notification.fromUser.profileImage.startsWith("http")
+        ? notification.fromUser.profileImage
+        : `${API_URL}${notification.fromUser.profileImage}`
+      : "https://via.placeholder.com/150"
+  }
+  alt={notification.fromUser?.firstName}
   className="w-12 h-12 rounded-full object-cover flex-shrink-0 border-2 border-purple-600"
   onError={(e) => {
-    console.log('Failed image:', e.target.src);
+    e.target.src = "https://via.placeholder.com/150";
   }}
 />
                     ) : (
