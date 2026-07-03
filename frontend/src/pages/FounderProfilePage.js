@@ -18,7 +18,7 @@ import {
   FaSpinner,
 } from 'react-icons/fa';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
 const FounderProfilePage = () => {
   const navigate = useNavigate();
@@ -44,6 +44,9 @@ const FounderProfilePage = () => {
       try {
         const res = await axios.get(`${API_URL}/profiles/${userId}`);
         setFounder(res.data.user);
+
+        console.log("Founder:", res.data.user);
+console.log("Profile Image:", res.data.user.profileImage);
 
         // Load connection status and likes
         checkConnectionStatus();
@@ -293,14 +296,19 @@ const FounderProfilePage = () => {
           <div className="flex gap-6 flex-col md:flex-row">
 
             <img
-              src={
-                founder.profileImage
-                  ? `${API_URL}${founder.profileImage}`
-                  : 'https://via.placeholder.com/150'
-              }
-              alt={founder.firstName}
-              className="w-32 h-32 rounded-full object-cover border-4 border-purple-600"
-            />
+  src={
+    founder.profileImage
+      ? founder.profileImage.startsWith("http")
+        ? founder.profileImage
+        : `${API_URL}${founder.profileImage}`
+      : "https://via.placeholder.com/150"
+  }
+  alt={founder.firstName}
+  className="w-32 h-32 rounded-full object-cover border-4 border-purple-600"
+  onError={(e) => {
+    console.log("Failed image:", e.target.src);
+  }}
+/>
 
             <div className="flex-1">
               <h1 className="text-4xl font-bold text-white mb-2">
