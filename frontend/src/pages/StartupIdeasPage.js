@@ -21,8 +21,7 @@ import ideaService from '../services/ideaService';
 const API_URL =
   process.env.REACT_APP_API_URL || "http://localhost:5000/api";
 
-const BACKEND_URL =
-  API_URL.replace("/api", "");
+const IMAGE_URL = API_URL.replace('/api', '');
 
 const StartupIdeasPage = () => {
   const navigate = useNavigate();
@@ -328,7 +327,11 @@ const StartupIdeasPage = () => {
                       <div className="flex items-center gap-2 mb-2">
                         {idea.userId?.profileImage ? (
                           <img
-  src={`${BACKEND_URL}${idea.userId.profileImage}`}
+  src={
+    idea.userId?.profileImage
+      ? `${IMAGE_URL}${idea.userId.profileImage}`
+      : "/default-avatar.png"
+  }
   alt={idea.userId?.firstName}
   className="w-8 h-8 rounded-full object-cover"
 />
