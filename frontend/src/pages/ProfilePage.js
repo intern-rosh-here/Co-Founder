@@ -615,17 +615,17 @@ const ProfilePage = () => {
                   >
                     <div className="flex items-center gap-4 flex-1">
                       {like.userId?.profileImage ? (
-                        <img
-                          src={
-  like.userId?.profileImage
-    ? like.userId.profileImage.startsWith("http")
-      ? like.userId.profileImage
-      : `${API_URL}${like.userId.profileImage}`
-    : "https://via.placeholder.com/150"
-}
-                          alt={like.userId.firstName}
-                          className="w-16 h-16 rounded-full object-cover border-2 border-red-600"
-                        />
+                       <img
+  src={
+    myProfile.profileImage
+      ? myProfile.profileImage.startsWith("http")
+        ? myProfile.profileImage
+        : `${API_URL}${myProfile.profileImage}`
+      : "https://via.placeholder.com/200?text=No+Image"
+  }
+  alt="Profile"
+  className="w-32 h-32 rounded-full object-cover border-4 border-purple-500"
+/>
                       ) : (
                         <div className="w-16 h-16 rounded-full bg-gradient-to-br from-red-600 to-pink-600 flex items-center justify-center text-2xl border-2 border-white/20">
                           👤
