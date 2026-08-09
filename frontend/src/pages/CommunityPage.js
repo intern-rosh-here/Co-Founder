@@ -17,7 +17,7 @@ import {
 import communityService from '../services/communityService';
 
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
 const CommunityPage = () => {
   const navigate = useNavigate();
@@ -267,10 +267,10 @@ await communityService.createPost(data);
   <div key={index} className="mt-2">
     {file.type === 'image' && (
       <img
-        src={`http://localhost:5000${file.url}`}
-        alt=""
-        className="rounded-lg max-h-64 w-full object-cover"
-      />
+  src={`${API_URL}${file.url}`}
+  alt={file.fileName || 'Post image'}
+  className="rounded-lg max-h-64 w-full object-cover"
+/>
     )}
 
     {file.type === 'video' && (
@@ -278,13 +278,13 @@ await communityService.createPost(data);
         controls
         className="rounded-lg max-h-64 w-full"
       >
-        <source src={`http://localhost:5000${file.url}`} />
+        <source src={`${API_URL}${file.url}`} />
       </video>
     )}
 
     {file.type === 'document' && (
       <a
-        href={`http://localhost:5000${file.url}`}
+        href={`${API_URL}${file.url}`}
         target="_blank"
         rel="noopener noreferrer"
         className="text-blue-400 underline"
