@@ -22,6 +22,18 @@ import connectionService from '../services/connectionService';
 
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
+const getImageUrl = (image) => {
+  if (!image) {
+    return "/default-profile.png";
+  }
+
+  if (image.startsWith("http://") || image.startsWith("https://")) {
+    return image;
+  }
+
+  return `${API_URL}${image}`;
+};
+
 const StartupIdeaDetailPage = () => {
   const { ideaId } = useParams();
   const navigate = useNavigate();
@@ -194,7 +206,7 @@ const StartupIdeaDetailPage = () => {
                 <div className="flex items-center gap-3">
                   {idea.userId?.profileImage ? (
                     <img
-                      src={`${API_URL}${idea.userId.profileImage}`}
+                      src={getImageUrl(idea.userId.profileImage)}
                       alt={idea.userId?.firstName}
                       className="w-12 h-12 md:w-16 md:h-16 rounded-full object-cover border-2 border-purple-600 cursor-pointer hover:scale-110 transition"
                       onClick={() => navigate(`/founder/${idea.userId._id}`)}
@@ -334,13 +346,7 @@ const StartupIdeaDetailPage = () => {
                   <div className="flex gap-3">
                     {user?.profileImage ? (
                       <img
-                        src={
-  user.profileImage
-    ? user.profileImage.startsWith("http")
-      ? user.profileImage
-      : `${API_URL}${user.profileImage}`
-    : "https://via.placeholder.com/150"
-}
+                        src={getImageUrl(user.profileImage)}
                         alt={user?.firstName}
                         className="w-10 h-10 rounded-full object-cover flex-shrink-0"
                       />
@@ -399,7 +405,7 @@ const StartupIdeaDetailPage = () => {
                       <div className="flex items-start gap-3">
                         {comment.userId?.profileImage ? (
                           <img
-                            src={`${API_URL}${comment.userId.profileImage}`}
+                            src={getImageUrl(comment.userId.profileImage)}
                             alt={comment.userId?.firstName}
                             className="w-10 h-10 rounded-full object-cover flex-shrink-0 cursor-pointer hover:scale-110 transition"
                             onClick={() => navigate(`/founder/${comment.userId._id}`)}
