@@ -17,7 +17,19 @@ import {
 import communityService from '../services/communityService';
 
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+
+const getImageUrl = (image) => {
+  if (!image) {
+    return "/default-profile.png";
+  }
+
+  if (image.startsWith("http://") || image.startsWith("https://")) {
+    return image;
+  }
+
+  return `${API_URL}${image}`;
+};
 
 const CommunityPage = () => {
   const navigate = useNavigate();
@@ -225,7 +237,7 @@ await communityService.createPost(data);
                       <div className="flex items-center gap-2 mb-2">
                         {post.userId?.profileImage ? (
                           <img
-                            src={`${API_URL}${post.userId.profileImage}`}
+                            src={getImageUrl(post.userId.profileImage)}
                             alt={post.userId?.firstName}
                             className="w-8 h-8 md:w-10 md:h-10 rounded-full object-cover flex-shrink-0"
                           />
@@ -267,7 +279,7 @@ await communityService.createPost(data);
   <div key={index} className="mt-2">
     {file.type === 'image' && (
       <img
-  src={`${API_URL}${file.url}`}
+  src={getImageUrl(file.url)}
   alt={file.fileName || 'Post image'}
   className="rounded-lg max-h-64 w-full object-cover"
 />
