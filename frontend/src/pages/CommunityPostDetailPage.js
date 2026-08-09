@@ -16,6 +16,18 @@ import communityService from '../services/communityService';
 
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
+const getImageUrl = (image) => {
+  if (!image) {
+    return "/default-profile.png";
+  }
+
+  if (image.startsWith("http://") || image.startsWith("https://")) {
+    return image;
+  }
+
+  return `${API_URL}${image}`;
+};
+
 const CommunityPostDetailPage = () => {
   const { postId } = useParams();
   const navigate = useNavigate();
@@ -136,7 +148,7 @@ const CommunityPostDetailPage = () => {
             <div className="flex items-center gap-3">
               {post.userId?.profileImage ? (
                 <img
-                  src={`${API_URL}${post.userId.profileImage}`}
+                  src={getImageUrl(post.userId.profileImage)}
                   alt={post.userId?.firstName}
                   className="w-12 h-12 md:w-16 md:h-16 rounded-full object-cover border-2 border-purple-600"
                 />
@@ -193,7 +205,7 @@ const CommunityPostDetailPage = () => {
                   <div key={index} className="rounded-lg overflow-hidden">
                     {file.type === 'image' && (
                       <img
-                        src={`${API_URL}${file.url}`}
+                        src={getImageUrl(file.url)}
                         alt="Post media"
                         className="w-full h-auto object-cover rounded-lg hover:scale-105 transition"
                       />
@@ -322,7 +334,7 @@ const CommunityPostDetailPage = () => {
                   <div className="flex items-start gap-3">
                     {comment.userId?.profileImage ? (
                       <img
-                        src={`${API_URL}${comment.userId.profileImage}`}
+                        src={getImageUrl(comment.userId.profileImage)}
                         alt={comment.userId?.firstName}
                         className="w-10 h-10 rounded-full object-cover flex-shrink-0"
                       />
